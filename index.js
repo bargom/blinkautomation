@@ -1,15 +1,32 @@
-'use strict';
+"use strict";
 
-console.log('Loading lambda function...');
+const BlinkApi = require('node-blink-security');
 
-const Blink = require('./lib/Blink');
+class Blink {
+    constructor() {
 
-exports.takePhoto = async (event, context, callback) => {
-    try {
-        const blink = new Blink();
-        let body = await blink.takePhoto(event.token, event.network, event.camera);
-        return callback(null, body);
-    } catch (err) {
-        return callback(err);
     }
-};
+
+    async takePhoto(token, network, camera) {
+        const blinkApi = new BlinkApi("none", "none", {
+            _token: token,
+            _network_id: network,
+            _region_id: "prde" //prde for eu, prod for other
+        });
+        return blinkApi.setupSystem(network)
+            .then(() => {
+                //console.dir(blinkApi);
+                let cameras = blinkApi.cameras;
+                console.log(`These are the cameras: ${JSON.stringify(cameras)}`);
+                let myCamera = cameras[Object.values(cameras).find(c=>c._name===camera)._id];
+                let snapResult = myCamera.snapPicture();
+                console.log(snapResult);
+                //return myCamera.fetchImageData();
+                return myCamera.thumbnail;
+            }, (error) => {
+                console.log(error);
+            });
+    }
+}
+
+module.exports = Blink;
