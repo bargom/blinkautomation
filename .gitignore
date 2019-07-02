@@ -1,0 +1,16 @@
+
+*.bak
+*.orig
+*.bat
+*.log
+.project
+.idea
+.tmp
+*.zip
+mocha*.json
+
+**node_modules/
+coverage/
+build/
+/config.env
+/.nyc_output/
