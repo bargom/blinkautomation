@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/bargom/blinkautomation#readme",
   "dependencies": {
-    "node-blink-security": "^2.0.2",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7"
+    "node-blink-security": "^2.0.2"
   }
 }
